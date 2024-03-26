@@ -5,6 +5,7 @@ from colorama import Fore, Style
 from screeninfo import get_monitors
 from shapely import Polygon, Point
 
+from animation_action_checker.animation_action_check_repository import AnimationActionCheckRepository
 from battle_field.animation_support.animation_action import AnimationAction
 from battle_field.components.field_area_inside.field_area_action import FieldAreaAction
 
@@ -175,6 +176,8 @@ class BattleFieldFrame(OpenGLFrame):
     __notify_reader_repository = NotifyReaderRepositoryImpl.getInstance()
     __music_player_repository = MusicPlayerRepositoryImpl.getInstance()
     window_size_repository = WindowSizeRepository.getInstance()
+
+    animation_action_check_repository = AnimationActionCheckRepository.getInstance()
 
     is_playing_action_animation = False
 
@@ -993,6 +996,9 @@ class BattleFieldFrame(OpenGLFrame):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         glDisable(GL_DEPTH_TEST)
+
+        if not self.animation_action_check_repository.get_is_play_animation():
+            self.animation_action_check_repository.process_data_from_queue()
 
         self.draw_base()
 
@@ -7547,6 +7553,8 @@ class BattleFieldFrame(OpenGLFrame):
                 if self.opponent_hp_repository.get_current_opponent_hp() <= 0:
                     self.opponent_hp_repository.opponent_character_die()
                     self.timer.stop_timer()
+
+                self.animation_action_check_repository.set_is_play_animation(False)
 
         move_to_origin_location(1)
 

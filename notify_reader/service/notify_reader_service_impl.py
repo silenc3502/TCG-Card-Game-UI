@@ -2,6 +2,7 @@ import json
 
 from colorama import Fore, Style
 
+from animation_action_checker.animation_action_check_repository import AnimationActionCheckRepository
 from battle_field.animation_support.animation_action import AnimationAction
 from battle_field.components.field_area_inside.field_area_action import FieldAreaAction
 from battle_field.components.field_area_inside.field_area_inside_handler import FieldAreaInsideHandler
@@ -53,6 +54,8 @@ class NotifyReaderServiceImpl(NotifyReaderService):
     __instance = None
 
     notify_callback_table = {}
+
+    __animation_action_check_repository = AnimationActionCheckRepository.getInstance()
 
     def __new__(cls):
         if cls.__instance is None:
@@ -248,8 +251,12 @@ class NotifyReaderServiceImpl(NotifyReaderService):
                 notify_key = list(notice_dict.keys())[0]
                 print(f"Notify key: {notify_key}")
 
-                notify_callback_function = self.notify_callback_table[notify_key]
-                notify_callback_function(notice_dict)
+                if not self.__animation_action_check_repository.get_is_play_animation():
+                    self.__animation_action_check_repository.add_notify_data_to_queue(notice_dict)
+                else:
+                    self.__animation_action_check_repository.set_is_play_animation(True)
+                    notify_callback_function = self.notify_callback_table[notify_key]
+                    notify_callback_function(notice_dict)
 
                 # for notice_type in NoticeType:
                 #     print(f"notice_type: {notice_type.name}")
