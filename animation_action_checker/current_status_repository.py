@@ -4,7 +4,7 @@ from animation_action_checker.check_action import CheckAction
 class CurrentStatusRepository:
     __instance = None
 
-    check_action = CheckAction.DUMMY
+    __check_action = CheckAction.DUMMY
 
     def __new__(cls):
         if cls.__instance is None:
