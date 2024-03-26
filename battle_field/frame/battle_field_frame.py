@@ -11126,7 +11126,7 @@ class BattleFieldFrame(OpenGLFrame):
                     self.battle_field_repository.lose()
 
                 self.attack_animation_object.set_opponent_animation_actor(None)
-                                self.animation_action_check_repository.set_is_play_animation(False)
+                self.animation_action_check_repository.set_is_play_animation(False)
 
         move_to_origin_location(1)
 
