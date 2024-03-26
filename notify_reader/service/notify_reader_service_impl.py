@@ -254,6 +254,11 @@ class NotifyReaderServiceImpl(NotifyReaderService):
                 notify_key = list(notice_dict.keys())[0]
                 print(f"Notify key: {notify_key}")
 
+                if notify_key == "NOTIFY_MULLIGAN_END":
+                    mulligan_end_handler = self.notify_read_handler.notify_callback_table[notify_key]
+                    mulligan_end_handler(notice_dict)
+                    return
+
                 if not self.__animation_action_check_repository.get_is_play_animation():
                     self.__animation_action_check_repository.add_notify_data_to_queue(notice_dict)
                 else:
