@@ -1,9 +1,13 @@
 import queue
 
+from notify_reader.service.notify_read_handler import NotifyReadHandler
+
 
 class AnimationActionCheckRepository:
     __instance = None
     __is_play_animation = False
+
+    notify_read_handler = NotifyReadHandler.getInstance()
 
     notify_queue = queue.Queue()
     # notify_reader_service = NotifyReaderServiceImpl.getInstance()
@@ -66,12 +70,12 @@ class AnimationActionCheckRepository:
             self.set_is_play_animation(True)
 
             notify_data = self.notify_queue.get()
-            self.notify_reader_service.process_remain_notify_handler(notify_data)
-            # self.process_notify_data(notify_data)
+            # self.notify_read_handler.process_remain_notify_handler(notify_data)
+            self.process_notify_data(notify_data)
         else:
             print("큐가 비었습니다.")
 
     def process_notify_data(self, notify_dict_data):
         notify_key = list(notify_dict_data.keys())[0]
-        notify_callback_function = self.notify_callback_table[notify_key]
+        notify_callback_function = self.notify_read_handler.notify_callback_table[notify_key]
         notify_callback_function(notify_dict_data)
