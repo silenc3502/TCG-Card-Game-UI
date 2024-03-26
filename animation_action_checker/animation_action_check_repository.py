@@ -72,8 +72,9 @@ class AnimationActionCheckRepository:
             notify_data = self.notify_queue.get()
             # self.notify_read_handler.process_remain_notify_handler(notify_data)
             self.process_notify_data(notify_data)
-        else:
-            print("큐가 비었습니다.")
+        # else:
+            # print("큐가 비었습니다.")
+
 
     def process_notify_data(self, notify_dict_data):
         notify_key = list(notify_dict_data.keys())[0]
