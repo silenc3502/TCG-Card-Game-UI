@@ -6,6 +6,8 @@ from screeninfo import get_monitors
 from shapely import Polygon, Point
 
 from animation_action_checker.animation_action_check_repository import AnimationActionCheckRepository
+from animation_action_checker.check_action import CheckAction
+from animation_action_checker.current_status_repository import CurrentStatusRepository
 from battle_field.animation_support.animation_action import AnimationAction
 from battle_field.components.field_area_inside.field_area_action import FieldAreaAction
 
@@ -178,6 +180,7 @@ class BattleFieldFrame(OpenGLFrame):
     window_size_repository = WindowSizeRepository.getInstance()
 
     animation_action_check_repository = AnimationActionCheckRepository.getInstance()
+    current_status_repository = CurrentStatusRepository.getInstance()
 
     is_playing_action_animation = False
 
@@ -999,6 +1002,9 @@ class BattleFieldFrame(OpenGLFrame):
 
         if not self.animation_action_check_repository.get_is_play_animation():
             self.animation_action_check_repository.process_data_from_queue()
+
+        if self.current_status_repository.get_check_action() is CheckAction.TURN_END:
+            self.animation_action_check_repository.set_is_play_animation(False)
 
         self.draw_base()
 

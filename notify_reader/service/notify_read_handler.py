@@ -1,5 +1,7 @@
 from colorama import Fore, Style
 
+from animation_action_checker.check_action import CheckAction
+from animation_action_checker.current_status_repository import CurrentStatusRepository
 from battle_field.animation_support.animation_action import AnimationAction
 from battle_field.animation_support.attack_animation import AttackAnimation
 from battle_field.components.field_area_inside.field_area_inside_handler import FieldAreaInsideHandler
@@ -59,6 +61,8 @@ class NotifyReadHandler:
     __your_tomb_repository = YourTombRepository.getInstance()
     __your_field_energy_repository = YourFieldEnergyRepository.getInstance()
     __mulligan_repository = MuligunYourHandRepository.getInstance()
+
+    current_status_repository = CurrentStatusRepository.getInstance()
 
     def __new__(cls):
         if cls.__instance is None:
@@ -255,6 +259,8 @@ class NotifyReadHandler:
             TurnStartAction.CHECK_MULTIPLE_UNIT_REQUIRED_FIRST_PASSIVE_SKILL_PROCESS)
         self.__field_area_inside_handler.set_required_to_process_passive_skill_multiple_unit_list(
             required_to_process_passive_skill_multiple_unit_list)
+
+        self.current_status_repository.set_check_action(CheckAction.TURN_END)
 
     def notify_attach_general_energy_card(self, notice_dictionary):
 

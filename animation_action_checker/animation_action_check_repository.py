@@ -1,5 +1,6 @@
 import queue
 
+from animation_action_checker.check_action import CheckAction
 from notify_reader.service.notify_read_handler import NotifyReadHandler
 
 

@@ -259,10 +259,10 @@ class NotifyReaderServiceImpl(NotifyReaderService):
                     mulligan_end_handler(notice_dict)
                     return
 
-                if notify_key == "NOTIFY_TURN_END":
-                    turn_end_handler = self.notify_read_handler.notify_callback_table[notify_key]
-                    turn_end_handler(notice_dict)
-                    return
+                # if notify_key == "NOTIFY_TURN_END":
+                #     turn_end_handler = self.notify_read_handler.notify_callback_table[notify_key]
+                #     turn_end_handler(notice_dict)
+                #     return
                     # self.animation_action_check_repository.set_is_play_animation(False)
 
                 if self.__animation_action_check_repository.get_is_play_animation():
