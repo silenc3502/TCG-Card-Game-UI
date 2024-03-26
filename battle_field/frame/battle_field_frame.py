@@ -1085,6 +1085,7 @@ class BattleFieldFrame(OpenGLFrame):
             card_id = self.battle_field_repository.get_current_use_card_id()
             self.notice_card.init_card_view_larger(card_id)
             self.master.after(2000, lambda: self.notice_card.reset_fixed_card_base(card_id))
+            self.master.after(2000, lambda: self.animation_action_check_repository.set_is_play_animation(False))
             self.battle_field_repository.reset_current_use_card_id()
 
         if self.attack_animation_object.get_animation_action() is AnimationAction.CONTRACT_OF_DOOM:

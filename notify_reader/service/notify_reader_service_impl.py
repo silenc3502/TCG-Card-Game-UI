@@ -259,7 +259,7 @@ class NotifyReaderServiceImpl(NotifyReaderService):
                     mulligan_end_handler(notice_dict)
                     return
 
-                if not self.__animation_action_check_repository.get_is_play_animation():
+                if self.__animation_action_check_repository.get_is_play_animation():
                     self.__animation_action_check_repository.add_notify_data_to_queue(notice_dict)
                 else:
                     self.__animation_action_check_repository.set_is_play_animation(True)
